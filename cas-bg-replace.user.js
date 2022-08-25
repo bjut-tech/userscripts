@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         【bjut.tech】统一认证背景图替换
 // @namespace    https://github.com/bjut-tech/userscripts
-// @version      0.1.0
+// @version      0.1.1
 // @description  是否觉得统一认证的红色背景图片枯燥乏味？这个脚本帮你把图片替换成校园美景！
 // @author       JingBh
 // @downloadURL  https://github.com/bjut-tech/userscripts/raw/main/cas-bg-replace.user.js
@@ -13,8 +13,8 @@
 // @run-at       document-body
 // ==/UserScript==
 
-// taken from: https://news.bjut.edu.cn/info/1007/3234.htm
 const images = [
+  // taken from: https://news.bjut.edu.cn/info/1007/3234.htm
   'https://news.bjut.edu.cn/__local/F/7E/6B/E1AE35E1C260D51779DA958C26B_3685570C_1C0E8.jpg',
   'https://news.bjut.edu.cn/__local/D/B4/E3/21016474211615558998AA3B06E_18540AD0_175AA.jpg',
   'https://news.bjut.edu.cn/__local/3/C7/16/9FD74F024CB0B3671CE3AF3FF9B_D0177233_22394.jpg',
@@ -48,7 +48,24 @@ const images = [
   'https://news.bjut.edu.cn/__local/0/1D/2A/A1A900B410D75788E24C39F1572_09A523BF_2905A.jpg',
   'https://news.bjut.edu.cn/__local/A/43/A3/6F5E28AA3A1D9CD25F722006685_EB302EAA_39F32.jpg',
   'https://news.bjut.edu.cn/__local/9/02/B7/D1137E7AC4ADE6657D7616EBD5C_C5047D8E_2E55E.jpg',
-  'https://news.bjut.edu.cn/__local/7/C3/8F/5FFC7B5866F17DC3D364E7608AC_AD26D244_16F7C.jpg'
+  'https://news.bjut.edu.cn/__local/7/C3/8F/5FFC7B5866F17DC3D364E7608AC_AD26D244_16F7C.jpg',
+  // taken from: https://news.bjut.edu.cn/info/1007/2932.htm
+  'https://news.bjut.edu.cn/__local/C/9F/9F/3362AAF12B3C161B0D8DD810D50_A610EA15_1B60A.jpg',
+  'https://news.bjut.edu.cn/__local/E/26/7F/C93D26710AD62ADFB98445B0F46_5EBBBED9_1CC99.jpg',
+  'https://news.bjut.edu.cn/__local/C/F9/9E/344BC556EB18315DA24044D2CBC_9E2D5A95_1F345.jpg',
+  'https://news.bjut.edu.cn/__local/D/E7/20/55A5F31847501583849FBAB30DA_EE91C161_1DA28.jpg',
+  'https://news.bjut.edu.cn/__local/E/C5/B2/329CE5387B51BDED694B6E1551A_7BF2F53E_2907B.jpg',
+  'https://news.bjut.edu.cn/__local/B/8A/E0/00C651E7D581A3069DA5F6C3146_3325B494_1F06C.jpg',
+  'https://news.bjut.edu.cn/__local/7/28/70/A5AF41E1058A61AD0F32F078F5C_FB097CC0_2386A.jpg',
+  'https://news.bjut.edu.cn/__local/0/6F/3C/0F23611461CF87DC57E9EF41190_DFCBB792_22DA2.jpg',
+  'https://news.bjut.edu.cn/__local/1/FF/87/D2B59942E2E842CD1F39A56090B_CB81D058_288FE.jpg',
+  'https://news.bjut.edu.cn/__local/A/B7/85/0B851EB0406F7628DE756AD38EA_8006825C_297DB.jpg',
+  'https://news.bjut.edu.cn/__local/B/4F/9E/29132D950D7A862317CAF5E2262_4F26B6D3_1E021.jpg',
+  'https://news.bjut.edu.cn/__local/5/0D/48/FDAB2D4937C54AAE9DAEA0E9303_A2571F86_19DEA.jpg',
+  'https://news.bjut.edu.cn/__local/A/6B/B8/B9CC4C8DC985E371F7A871B082B_E9AA1655_213F6.jpg',
+  'https://news.bjut.edu.cn/__local/F/26/D2/6F6830551CEF93B2A306DDC894B_5AD6ADD6_1CCF2.jpg',
+  'https://news.bjut.edu.cn/__local/2/8B/5A/373011F23E3D0CB0E8A0A727C2D_26A55BE1_16494.jpg',
+  'https://news.bjut.edu.cn/__local/9/67/E1/21EB8746299DC0A4C424326EEC9_A57099EC_3F4D7.jpg'
 ];
 
 (function () {
