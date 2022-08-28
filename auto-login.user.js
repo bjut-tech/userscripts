@@ -24,6 +24,7 @@
   // * VPN - vpn.bjut.edu.cn
   // * 邮箱 - mail.bjut.edu.cn
   // * 日新学堂（校外登录） - bjut1.fanya.chaoxing.com
+  // * 计费系统自服务 - jfself.bjut.edu.cn
 
   let checked = false
 
@@ -163,6 +164,20 @@
     // has captcha, manual submit needed
   }
 
+  function doJfself() {
+    if (!checkConfig(['sid', 'password'])) { return }
+
+    const sid = GM_config.get('sid')
+    const password = GM_config.get('password')
+
+    // set values
+    const form = document.getElementById('loginform')
+    form.account.value = sid
+    form.password.value = password
+
+    form.submit()
+  }
+
   function main() {
     const domain = resolveWebvpnDomain(window.location.hostname)
     const path = resolvePath()
@@ -183,6 +198,9 @@
       case 'bjut1.fanya.chaoxing.com':
         if (path === 'login') { doChaoxing() }
         break
+
+      case 'jfself.bjut.edu.cn':
+        if (path === 'nav_login') { doJfself() }
     }
   }
 
