@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         【bjut.tech】自动登录
 // @namespace    https://github.com/bjut-tech/userscripts
-// @version      0.2.0
+// @version      0.2.1
 // @description  自动登录学校部分系统，免去输入用户名密码的繁杂。
 // @author       JingBh
 // @downloadURL  https://github.com/bjut-tech/userscripts/raw/main/auto-login.user.js
@@ -149,7 +149,7 @@
       document.getElementById('password').value = password
 
       document.getElementsByTagName('form')[0].submit()
-    }, 1000)
+    }, 3000)
   }
 
   function doChaoxing() {
@@ -171,11 +171,13 @@
     const sid = GM_config.get('sid')
     const password = GM_config.get('password')
 
-    // set values
-    document.getElementById('yhm').value = sid
-    document.getElementById('mm').value = password
+    setTimeout(() => {
+      // set values
+      document.getElementById('yhm').value = sid
+      document.getElementById('mm').value = password
 
-    document.getElementById('dl').click()
+      document.getElementById('dl').click()
+    }, 3000)
   }
 
   function doJfself() {
