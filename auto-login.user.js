@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         【bjut.tech】自动登录
 // @namespace    https://github.com/bjut-tech/userscripts
-// @version      0.2.2
+// @version      0.3.0
 // @description  自动登录学校部分系统，免去输入用户名密码的繁杂。
 // @author       JingBh
 // @downloadURL  https://github.com/bjut-tech/userscripts/raw/main/auto-login.user.js
@@ -24,6 +24,7 @@
   // * VPN - vpn.bjut.edu.cn
   // * 日新学堂（校外登录） - bjut1.fanya.chaoxing.com
   // * 教学管理系统 - jwglxt.bjut.edu.cn
+  // * 上网登录 - lgn.bjut.edu.cn
   // * 计费系统自服务 - jfself.bjut.edu.cn
 
   let checked = false
@@ -157,6 +158,22 @@
     }, 1000)
   }
 
+  function doLgn() {
+    if (!checkConfig(['sid', 'password'])) { return }
+
+    const sid = GM_config.get('sid')
+    const password = GM_config.get('password')
+
+    // set values
+    const form = document.getElementsByTagName('form')[0]
+    form['DDDDD'].value = sid
+    form.upass.value = password
+    form.v46s.value = '0'
+
+    unsafeWindow.mysubmit()
+    form.submit()
+  }
+
   function doJfself() {
     if (!checkConfig(['sid', 'password'])) { return }
 
@@ -194,9 +211,15 @@
 
       case 'jwglxt.bjut.edu.cn':
         if (path.indexOf('login') !== -1) { doJw() }
+        break
+
+      case 'lgn.bjut.edu.cn':
+        if (!path) { doLgn() }
+        break
 
       case 'jfself.bjut.edu.cn':
         if (path === 'nav_login') { doJfself() }
+        break
     }
   }
 
