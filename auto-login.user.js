@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         【bjut.tech】自动登录
 // @namespace    https://github.com/bjut-tech/userscripts
-// @version      0.3.0
+// @version      0.3.1
 // @description  自动登录学校部分系统，免去输入用户名密码的繁杂。
 // @author       JingBh
 // @downloadURL  https://github.com/bjut-tech/userscripts/raw/main/auto-login.user.js
@@ -214,6 +214,7 @@
         break
 
       case 'lgn.bjut.edu.cn':
+      case 'lgn6.bjut.edu.cn':
         if (!path) { doLgn() }
         break
 
