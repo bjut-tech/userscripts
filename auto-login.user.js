@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         【bjut.tech】自动登录
 // @namespace    https://github.com/bjut-tech/userscripts
-// @version      0.3.1
+// @version      0.4.0
 // @description  自动登录学校部分系统，免去输入用户名密码的繁杂。
 // @author       JingBh
 // @downloadURL  https://github.com/bjut-tech/userscripts/raw/main/auto-login.user.js
@@ -26,6 +26,10 @@
   // * 教学管理系统 - jwglxt.bjut.edu.cn
   // * 上网登录 - lgn.bjut.edu.cn
   // * 计费系统自服务 - jfself.bjut.edu.cn
+
+  // Supported webvpn services for now:
+  // * webvpn.bjut.edu.cn
+  // * libziyuan.bjut.edu.cn
 
   let checked = false
 
@@ -80,6 +84,29 @@
     // subdomain proxy
     const subdomainRegex = /^([a-zA-Z\d-]{1,}?)(?:-\d{1,5})?\.webvpn\.bjut\.edu\.cn$/
     result = result.replace(subdomainRegex, '$1.bjut.edu.cn')
+
+    result = resolveLibziyuanDomain(result)
+
+    if (result !== domain) {
+      console.log('[auto-login] resolved domain:', result)
+    }
+
+    return result
+  }
+
+  function resolveLibziyuanDomain(domain) {
+    const regex = /^(.+?)(?:-(?:\d){1,5})?(?:-[sp])?\.libziyuan\.bjut\.edu\.cn$/
+    const matches = regex.exec(domain)
+
+    if (!matches) { return domain }
+
+    let result = matches[1]
+    while (result.indexOf('-') !== -1) {
+      result = result.replace('-', '.')
+    }
+    while (result.indexOf('..') !== -1) {
+      result = result.replace('..', '-')
+    }
 
     return result
   }
