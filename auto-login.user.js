@@ -21,6 +21,7 @@
 
   // Supported websites for now:
   // * 统一认证 - cas.bjut.edu.cn
+  // * 图书馆资源访问系统 - libziyuan.bjut.edu.cn
   // * VPN - vpn.bjut.edu.cn
   // * 日新学堂（校外登录） - bjut1.fanya.chaoxing.com
   // * 教学管理系统 - jwglxt.bjut.edu.cn
@@ -92,6 +93,14 @@
     return path
   }
 
+  function resolveFragment() {
+    let fragment = window.location.hash.toLowerCase()
+    while (fragment.substring(0, 1) === '#') {
+      fragment = fragment.substring(1)
+    }
+    return fragment
+  }
+
   function doCas() {
     if (!checkConfig(['sid', 'password'])) { return }
 
@@ -114,6 +123,45 @@
       // no captcha, submit immediately
       unsafeWindow.doLogin(sid, password, 'username_password')
     }
+  }
+
+  function doLibziyuan() {
+    if (!checkConfig(['sid', 'password'])) { return }
+
+    const sid = GM_config.get('sid')
+    const password = GM_config.get('password')
+
+    // wait for the form to load
+    window.setTimeout(() => {
+      const form = document.getElementById('Calc')
+
+      const sidInput = document.evaluate(
+        '//*[@id="Calc"]/div[1]/div[1]/div/div[1]/input',
+        document, null, XPathResult.FIRST_ORDERED_NODE_TYPE).singleNodeValue
+      sidInput.value = sid
+
+      const passwordInput = document.getElementById('loginPwd')
+      passwordInput.value = password
+
+      const agreementInput = document.evaluate(
+        '//*[@id="Calc"]/div[3]/span/input[1]',
+        document, null, XPathResult.FIRST_ORDERED_NODE_TYPE).singleNodeValue
+
+      if (!agreementInput.checked) {
+        document.evaluate(
+          '//*[@id="Calc"]/div[3]/span/div[1]',
+          document, null, XPathResult.FIRST_ORDERED_NODE_TYPE)
+          .singleNodeValue.click()
+      }
+
+      window.setTimeout(() => {
+        // submit button
+        document.evaluate(
+          '//*[@id="Calc"]/div[4]/button',
+          document, null, XPathResult.FIRST_ORDERED_NODE_TYPE)
+          .singleNodeValue.click()
+      }, 1000)
+    }, 3000)
   }
 
   function doVpn() {
@@ -191,10 +239,15 @@
   function main() {
     const domain = resolveWebvpnDomain(window.location.hostname)
     const path = resolvePath()
+    const fragment = resolveFragment()
 
     switch (domain) {
       case 'cas.bjut.edu.cn':
         if (path === 'login') { doCas() }
+        break
+
+      case 'libziyuan.bjut.edu.cn':
+        if (fragment === '!/login') { doLibziyuan() }
         break
 
       case 'vpn.bjut.edu.cn':
